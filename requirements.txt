@@ -3,4 +3,5 @@ pdfplumber
 pillow
 Image
 pdf2image
-airflow
+apache-airflow
+
