@@ -105,7 +105,7 @@ extract_columns_task = PythonOperator(
 
 streamlit_task = BashOperator(
     task_id='run_streamlit_app',
-    bash_command='streamlit run /Users/hilonibhimani/airflow/dags/st.py',  
+    bash_command='streamlit run st.py',  
     dag=dag,
 )
 
