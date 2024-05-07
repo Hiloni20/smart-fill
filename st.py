@@ -58,10 +58,13 @@ def main():
     if selected_files_financial_assets:
         selected_files.append('financial_assets.xlsx')
 
-    if st.button('Preprocess selected files'):
-        with st.spinner('Preprocessing files...'):
-            preprocess_selected_files(selected_files)
-            st.success('Preprocessing completed successfully.')
+    if not selected_files:
+        st.error('Select files to preprocess')
+    else:
+        if st.button('Preprocess selected files'):
+            with st.spinner('Preprocessing files...'):
+                preprocess_selected_files(selected_files)
+                st.success('Preprocessing completed successfully.')
 
 if __name__ == '__main__':
     main()
