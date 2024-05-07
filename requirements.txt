@@ -1,0 +1,6 @@
+streamlit
+pdfplumber
+pillow
+Image
+pdf2image
+
