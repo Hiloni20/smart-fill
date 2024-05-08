@@ -4,4 +4,4 @@ pillow
 Image
 pdf2image
 apache-airflow
-
+pandas
