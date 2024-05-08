@@ -7,7 +7,7 @@ def preprocess_excel_files(selected_files):
         return
     
     # Make a POST request to trigger the Airflow DAG
-    response = requests.post('http://localhost:8080/api/v1/dags/preprocess_extract_columns/dag_runs',
+    response = requests.post('http://localhost:8080/dagrun',
                              json={})
     if response.status_code == 200:
         st.success("Airflow DAG triggered successfully.")
