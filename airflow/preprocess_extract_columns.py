@@ -6,9 +6,9 @@ from airflow.operators.bash_operator import BashOperator
 from datetime import datetime
 
 def preprocess_excel_files():
-    file_paths = ['/Users/hilonibhimani/airflow/dags/client_profile.xlsx',
-                  '/Users/hilonibhimani/airflow/dags/family_members.xlsx',
-                  '/Users/hilonibhimani/airflow/dags/financial_assets.xlsx']
+    file_paths = ['/pages/client_profile.xlsx',
+                  '/pages/family_members.xlsx',
+                  '/pages/financial_assets.xlsx']
     
     for file_path in file_paths:
         df = pd.read_excel(file_path)
@@ -105,7 +105,7 @@ extract_columns_task = PythonOperator(
 
 streamlit_task = BashOperator(
     task_id='run_streamlit_app',
-    bash_command='streamlit run /Users/hilonibhimani/airflow/dags/st.py',  
+    bash_command='streamlit run /pages/st.py',  
     dag=dag,
 )
 
