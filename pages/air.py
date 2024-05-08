@@ -90,7 +90,7 @@ def main():
 
     if st.button('Preprocess selected files'):
         with st.spinner('Preprocessing files...'):
-            preprocess_selected_files(selected_files)
+            preprocess_excel_files(selected_files)
             st.success('Preprocessing completed successfully.')
             st.write('Triggering Airflow DAG...')
             execute_airflow_dag()
