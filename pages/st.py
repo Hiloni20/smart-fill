@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-def preprocess_selected_files(selected_files):
+def preprocess_excel_files(selected_files):
     if not selected_files:
         st.error("Please select at least one file to preprocess.")
         return
@@ -30,7 +30,7 @@ def main():
         selected_files.append('financial_assets.xlsx')
 
     if st.button('Preprocess selected files'):
-        preprocess_selected_files(selected_files)
+        preprocess_excel_files(selected_files)
 
 if __name__ == '__main__':
     main()
