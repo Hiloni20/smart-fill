@@ -30,7 +30,7 @@ def preprocess_excel_files(selected_files):
         return
 
     for file_name in selected_files:
-        file_path = f'/Users/hilonibhimani/airflow/dags/{file_name}'
+        file_path = f'pages/{file_name}'
         try:
             df = pd.read_excel(file_path)
             original_indices = df.index
