@@ -24,7 +24,7 @@ from datetime import datetime
 import subprocess
 import streamlit as st
 
-def preprocess_selected_files(selected_files):
+def preprocess_excel_files(selected_files):
     if not selected_files:
         st.error("Select files to preprocess.")
         return
