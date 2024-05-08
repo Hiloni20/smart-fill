@@ -31,7 +31,7 @@ def streamlit_app():
             st.error("Please select at least one file to preprocess.")
 
 # Define Excel preprocessing functions
-def preprocess_selected_files(selected_files):
+def preprocess_excel_files(selected_files):
     for file_name in selected_files:
         file_path = f'/pages/{file_name}'
         try:
