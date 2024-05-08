@@ -1,51 +1,18 @@
-import pandas as pd
+import requests
 import streamlit as st
-from datetime import datetime
 
 def preprocess_selected_files(selected_files):
     if not selected_files:
         st.error("Please select at least one file to preprocess.")
         return
     
-    for file_name in selected_files:
-        file_path = f'pages/{file_name}'
-        try:
-            df = pd.read_excel(file_path)
-            original_indices = df.index
-
-            numeric_columns = df.select_dtypes(include=[float, int]).columns
-
-            for col in numeric_columns:
-                if '%' in col:  
-                    df[col] = df[col].str.rstrip('%').astype(float) / 100.0
-                else:
-                    df[col] = df[col].fillna(df[col].mean())
-
-            if 'Date of Birth' in df.columns:
-                df['Date of Birth'] = pd.to_datetime(df['Date of Birth'], errors='coerce')
-                df = df.dropna(subset=['Date of Birth'])
-                df['Age'] = datetime.now().year - df['Date of Birth'].dt.year
-                df['Generation'] = df['Date of Birth'].dt.year.apply(categorize_generation)
-
-            df = df.reindex(original_indices)
-
-            preprocessed_file_path = file_path.replace('.xlsx', '_preprocessed.xlsx')
-            df.to_excel(preprocessed_file_path, index=False)
-            st.write(f"Preprocessed file saved: {preprocessed_file_path}")
-        except Exception as e:
-            st.error(f"Error preprocessing file {file_name}: {str(e)}")
-
-def categorize_generation(year):
-    if year >= 1997:
-        return 'Gen Z'
-    elif year >= 1981:
-        return 'Millennials'
-    elif year >= 1965:
-        return 'Gen X'
-    elif year >= 1946:
-        return 'Baby Boomers'
+    # Make a POST request to trigger the Airflow DAG
+    response = requests.post('http://localhost:8080/api/v1/dags/preprocess_extract_columns/dag_runs',
+                             json={})
+    if response.status_code == 200:
+        st.success("Airflow DAG triggered successfully.")
     else:
-        return 'Silent Generation'
+        st.error("Failed to trigger Airflow DAG.")
 
 def main():
     st.title('Excel Preprocessing')
@@ -63,12 +30,7 @@ def main():
         selected_files.append('financial_assets.xlsx')
 
     if st.button('Preprocess selected files'):
-        if selected_files:
-            with st.spinner('Preprocessing files...'):
-                preprocess_selected_files(selected_files)
-                st.success('Preprocessing completed successfully.')
-        else:
-            st.error("Please select at least one file to preprocess.")
+        preprocess_selected_files(selected_files)
 
 if __name__ == '__main__':
     main()
