@@ -1,36 +1,39 @@
-# import streamlit as st
-# import subprocess
-
-# def execute_airflow_dag():
-#     command = "airflow dags trigger --conf '{}' preprocess_extract_columns"
-#     subprocess.run(command, shell=True)
-
-# def main():
-#     def execute_tasks():
-#         execute_airflow_dag()
-#         streamlit_command = "streamlit run /Users/hilonibhimani/airflow/dags/st.py"
-#         subprocess.Popen(streamlit_command, shell=True)
-#     execute_tasks()
-
-# if __name__ == '__main__':
-#     main()
-
+# combined_app.py
 
 import pandas as pd
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.bash_operator import BashOperator
-from datetime import datetime
-import subprocess
 import streamlit as st
+from datetime import datetime
 
-def preprocess_excel_files(selected_files):
-    if not selected_files:
-        st.error("Select files to preprocess.")
-        return
+# Define Streamlit app code
+def streamlit_app():
+    st.title('Excel Preprocessing')
 
+    client_profile = st.checkbox('Client Profile', value=False)
+    family_members = st.checkbox('Family Members', value=False)
+    financial_assets = st.checkbox('Financial Assets', value=False)
+
+    selected_files = []
+    if client_profile:
+        selected_files.append('client_profile.xlsx')
+    if family_members:
+        selected_files.append('family_members.xlsx')
+    if financial_assets:
+        selected_files.append('financial_assets.xlsx')
+
+    if selected_files and st.button('Preprocess selected files'):
+        if selected_files:
+            preprocess_selected_files(selected_files)
+            st.success('Preprocessing completed successfully.')
+        else:
+            st.error("Please select at least one file to preprocess.")
+
+# Define Excel preprocessing functions
+def preprocess_selected_files(selected_files):
     for file_name in selected_files:
-        file_path = f'pages/{file_name}'
+        file_path = f'/pages/{file_name}'
         try:
             df = pd.read_excel(file_path)
             original_indices = df.index
@@ -69,34 +72,7 @@ def categorize_generation(year):
     else:
         return 'Silent Generation'
 
-def execute_airflow_dag():
-    command = "airflow dags trigger --conf '{}' preprocess_extract_columns"
-    subprocess.run(command, shell=True)
-
-def main():
-    st.title('Excel Preprocessing')
-
-    selected_files_client_profile = st.checkbox('Client Profile')
-    selected_files_family_members = st.checkbox('Family Members')
-    selected_files_financial_assets = st.checkbox('Financial Assets')
-
-    selected_files = []
-    if selected_files_client_profile:
-        selected_files.append('client_profile.xlsx')
-    if selected_files_family_members:
-        selected_files.append('family_members.xlsx')
-    if selected_files_financial_assets:
-        selected_files.append('financial_assets.xlsx')
-
-    if st.button('Preprocess selected files'):
-        with st.spinner('Preprocessing files...'):
-            preprocess_excel_files(selected_files)
-            st.success('Preprocessing completed successfully.')
-            execute_airflow_dag()
-
-if __name__ == '__main__':
-    main()
-
+# Define Airflow DAG
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
@@ -117,24 +93,11 @@ preprocess_files_task = PythonOperator(
     dag=dag,
 )
 
-# extract_columns_task = PythonOperator(
-#     task_id='extract_columns_and_save',
-#     python_callable=extract_columns_and_save,
-#     op_kwargs={
-#         'file_paths': ['/Users/hilonibhimani/airflow/dags/client_profile_preprocessed.xlsx',
-#                        '/Users/hilonibhimani/airflow/dags/family_members_preprocessed.xlsx',
-#                        '/Users/hilonibhimani/airflow/dags/financial_assets_preprocessed.xlsx'],
-#         'output_file_path': '/Users/hilonibhimani/airflow/dags/extracted_columns.xlsx',
-#         'columns_to_extract': ['ClientID', 'First Name', 'Last Name', 'Contact Information', 
-#                                'Generation', 'Asset Type', 'Asset Details', 'Value']
-#     },
-#     dag=dag,
-# )
-
 streamlit_task = BashOperator(
     task_id='run_streamlit_app',
-    bash_command='streamlit run /Users/hilonibhimani/Desktop/air.py',  
+    bash_command='streamlit run /pages/air.py',  
     dag=dag,
 )
 
 preprocess_files_task >> streamlit_task
+
