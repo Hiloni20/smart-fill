@@ -92,7 +92,6 @@ def main():
         with st.spinner('Preprocessing files...'):
             preprocess_excel_files(selected_files)
             st.success('Preprocessing completed successfully.')
-            st.write('Triggering Airflow DAG...')
             execute_airflow_dag()
 
 if __name__ == '__main__':
