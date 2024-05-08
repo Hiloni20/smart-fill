@@ -118,19 +118,19 @@ preprocess_files_task = PythonOperator(
     dag=dag,
 )
 
-extract_columns_task = PythonOperator(
-    task_id='extract_columns_and_save',
-    python_callable=extract_columns_and_save,
-    op_kwargs={
-        'file_paths': ['/Users/hilonibhimani/airflow/dags/client_profile_preprocessed.xlsx',
-                       '/Users/hilonibhimani/airflow/dags/family_members_preprocessed.xlsx',
-                       '/Users/hilonibhimani/airflow/dags/financial_assets_preprocessed.xlsx'],
-        'output_file_path': '/Users/hilonibhimani/airflow/dags/extracted_columns.xlsx',
-        'columns_to_extract': ['ClientID', 'First Name', 'Last Name', 'Contact Information', 
-                               'Generation', 'Asset Type', 'Asset Details', 'Value']
-    },
-    dag=dag,
-)
+# extract_columns_task = PythonOperator(
+#     task_id='extract_columns_and_save',
+#     python_callable=extract_columns_and_save,
+#     op_kwargs={
+#         'file_paths': ['/Users/hilonibhimani/airflow/dags/client_profile_preprocessed.xlsx',
+#                        '/Users/hilonibhimani/airflow/dags/family_members_preprocessed.xlsx',
+#                        '/Users/hilonibhimani/airflow/dags/financial_assets_preprocessed.xlsx'],
+#         'output_file_path': '/Users/hilonibhimani/airflow/dags/extracted_columns.xlsx',
+#         'columns_to_extract': ['ClientID', 'First Name', 'Last Name', 'Contact Information', 
+#                                'Generation', 'Asset Type', 'Asset Details', 'Value']
+#     },
+#     dag=dag,
+# )
 
 streamlit_task = BashOperator(
     task_id='run_streamlit_app',
@@ -138,4 +138,4 @@ streamlit_task = BashOperator(
     dag=dag,
 )
 
-preprocess_files_task >> extract_columns_task >> streamlit_task
+preprocess_files_task >> streamlit_task
