@@ -3,6 +3,10 @@ import streamlit as st
 from datetime import datetime
 
 def preprocess_selected_files(selected_files):
+    if not selected_files:
+        st.error("Please select at least one file to preprocess.")
+        return
+    
     for file_name in selected_files:
         file_path = f'/Users/hilonibhimani/airflow/dags/{file_name}'
         try:
@@ -46,22 +50,25 @@ def categorize_generation(year):
 def main():
     st.title('Excel Preprocessing')
 
-    selected_files_client_profile = st.checkbox('Client Profile')
-    selected_files_family_members = st.checkbox('Family Members')
-    selected_files_financial_assets = st.checkbox('Financial Assets')
+    client_profile = st.checkbox('Client Profile', value=False)
+    family_members = st.checkbox('Family Members', value=False)
+    financial_assets = st.checkbox('Financial Assets', value=False)
 
     selected_files = []
-    if selected_files_client_profile:
+    if client_profile:
         selected_files.append('client_profile.xlsx')
-    if selected_files_family_members:
+    if family_members:
         selected_files.append('family_members.xlsx')
-    if selected_files_financial_assets:
+    if financial_assets:
         selected_files.append('financial_assets.xlsx')
 
     if st.button('Preprocess selected files'):
-        with st.spinner('Preprocessing files...'):
-            preprocess_selected_files(selected_files)
-            st.success('Preprocessing completed successfully.')
+        if selected_files:
+            with st.spinner('Preprocessing files...'):
+                preprocess_selected_files(selected_files)
+                st.success('Preprocessing completed successfully.')
+        else:
+            st.error("Please select at least one file to preprocess.")
 
 if __name__ == '__main__':
     main()
