@@ -7,7 +7,7 @@ import uuid
 import datetime
 import io
 
-file_path_X = "updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx"
+file_path_X = "FamilyOfficeEntityDataSampleV1.1.xlsx"
 df = pd.read_excel(file_path_X, engine='openpyxl')
 file_path_Y = "Y_New_Processed.xlsx"
 df1 = pd.read_excel(file_path_Y, engine='openpyxl')
