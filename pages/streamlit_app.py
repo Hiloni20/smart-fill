@@ -9,7 +9,7 @@ import io
 
 file_path_X = "FamilyOfficeEntityDataSampleV1.1.xlsx"
 df = pd.read_excel(file_path_X, engine='openpyxl')
-file_path_Y = "Y_New_Processed.xlsx"
+file_path_Y = "FamilyOfficeEntityDataSampleV1.1.xlsx"
 df1 = pd.read_excel(file_path_Y, engine='openpyxl')
 # file_path_Y="/Users/atharvabapat/airflow/Y_New_Processed.xlsx"
 # df1=pd.read_excel(file_path_Y, engine='openpyxl')
