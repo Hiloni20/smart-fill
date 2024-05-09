@@ -1,10 +1,5 @@
 import requests
-from base64 import b64encode
 import streamlit as st
-
-# Define Airflow API credentials
-AIRFLOW_USERNAME = "admin"
-AIRFLOW_PASSWORD = "Hilonib20!"
 
 def preprocess_excel_files(selected_files):
     if not selected_files:
@@ -12,16 +7,18 @@ def preprocess_excel_files(selected_files):
         return
     
     # Define Airflow API endpoint
-    airflow_api_url = 'http://localhost:8080/api/v1/dags/{dag_id}/dagRuns'
-    
+    airflow_api_url = 'http://localhost:8080/api/v1/dags/preprocess_extract_columns/dagRuns'
+    username = "admin"
+    password = "Hilonib20!"
     # Create authentication headers
-    auth_headers = {
-        "Authorization": "Basic " + b64encode(f"{AIRFLOW_USERNAME}:{AIRFLOW_PASSWORD}".encode()).decode(),
-        "Content-Type": "application/json"
+    auth = (username, password)
+    headers = {"Content-type": "application/json"}
+    payload = {
+        "conf": {},
+        "note": "string"
     }
-
-    # Make a POST request to trigger the Airflow DAG with authentication headers
-    response = requests.post(airflow_api_url, headers=auth_headers, json={})
+    
+    response = requests.post(airflow_api_url, headers=headers, auth=auth, json=payload)
     
     if response.status_code == 200:
         st.success("Airflow DAG triggered successfully.")
