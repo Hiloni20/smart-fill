@@ -6,5 +6,4 @@ pdf2image
 apache-airflow==2.2.0
 pandas
 openpyxl
-astro-sdk-python
 requests
