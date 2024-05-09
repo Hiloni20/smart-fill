@@ -6,11 +6,9 @@ def preprocess_excel_files(selected_files):
         st.error("Please select at least one file to preprocess.")
         return
     
-    # Define Airflow API endpoint
     airflow_api_url = 'http://localhost:8080/api/v1/dags/preprocess_extract_columns/dagRuns'
     username = "admin"
     password = "Hilonib20!"
-    # Create authentication headers
     auth = (username, password)
     headers = {"Content-type": "application/json"}
     payload = {
@@ -20,7 +18,7 @@ def preprocess_excel_files(selected_files):
     
     try:
         response = requests.post(airflow_api_url, headers=headers, auth=auth, json=payload)
-        response.raise_for_status()  # Raise an error for HTTP errors
+        response.raise_for_status() 
         st.success("Airflow DAG triggered successfully.")
     except requests.exceptions.ConnectionError as e:
         st.error("Failed to connect to the Airflow server. Make sure the server is running and accessible at http://localhost:8080.")
