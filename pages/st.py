@@ -1,4 +1,5 @@
 import requests
+from base64 import b64encode
 import streamlit as st
 
 # Define Airflow API credentials
