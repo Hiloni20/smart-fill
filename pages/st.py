@@ -6,26 +6,15 @@ def preprocess_excel_files(selected_files):
         st.error("Please select at least one file to preprocess.")
         return
     
-    airflow_api_url = 'http://localhost:8080/api/v1/dags/preprocess_extract_columns/dagRuns'
-    username = "admin"
-    password = "Hilonib20!"
-    auth = (username, password)
-    headers = {"Content-type": "application/json"}
-    payload = {
-        "conf": {},
-        "note": "string"
-    }
-    
-    try:
-        response = requests.post(airflow_api_url, headers=headers, auth=auth, json=payload)
-        response.raise_for_status() 
+    api_url = 'http://localhost:8080/api/v1/dags/preprocess_extract_columns/dagRuns'
+    username = 'admin'
+    password = 'Hilonib20!'
+    response = requests.post(api_url, auth=(username, password), json={})
+
+    if response.status_code == 200:
         st.success("Airflow DAG triggered successfully.")
-    except requests.exceptions.ConnectionError as e:
-        st.error("Failed to connect to the Airflow server.")
-    except requests.exceptions.HTTPError as e:
-        st.error(f"Failed to trigger Airflow DAG: {e}")
-    except Exception as e:
-        st.error(f"An unexpected error occurred: {e}")
+    else:
+        st.error("Failed to trigger Airflow DAG. Status code: {}".format(response.status_code))
 
 def main():
     st.title('Excel Preprocessing')
