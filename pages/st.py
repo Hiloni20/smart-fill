@@ -7,7 +7,7 @@ def preprocess_excel_files(selected_files):
         return
     
     # Define Airflow API endpoint
-    airflow_api_url = 'http://localhost:8501/api/v1/dags/preprocess_extract_columns/dagRuns'
+    airflow_api_url = 'http://localhost:8080/api/v1/dags/preprocess_extract_columns/dagRuns'
     username = "admin"
     password = "Hilonib20!"
     # Create authentication headers
