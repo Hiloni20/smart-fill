@@ -3,7 +3,7 @@ pdfplumber
 pillow
 Image
 pdf2image
-apache-airflow==2.2.0
+apache-airflow
 pandas
 openpyxl
 requests
