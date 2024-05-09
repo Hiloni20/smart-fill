@@ -18,12 +18,15 @@ def preprocess_excel_files(selected_files):
         "note": "string"
     }
     
-    response = requests.post(airflow_api_url, headers=headers, auth=auth, json=payload)
-    
-    if response.status_code == 200:
-        st.success("Airflow DAG triggered successfully.")
-    else:
-        st.error("Failed to trigger Airflow DAG.")
+    try:
+        response = requests.post(airflow_api_url, headers=headers, auth=auth, json=payload)
+        
+        if response.status_code == 200:
+            st.success("Airflow DAG triggered successfully.")
+        else:
+            st.error(f"Failed to trigger Airflow DAG. Status code: {response.status_code}")
+    except requests.exceptions.RequestException as e:
+        st.error(f"An error occurred while sending the HTTP request: {e}")
 
 def main():
     st.title('Excel Preprocessing')
