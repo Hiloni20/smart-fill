@@ -21,7 +21,7 @@ def preprocess_excel_files(selected_files):
         response.raise_for_status() 
         st.success("Airflow DAG triggered successfully.")
     except requests.exceptions.ConnectionError as e:
-        st.error("Failed to connect to the Airflow server. Make sure the server is running and accessible at http://localhost:8080.")
+        st.error("Failed to connect to the Airflow server.")
     except requests.exceptions.HTTPError as e:
         st.error(f"Failed to trigger Airflow DAG: {e}")
     except Exception as e:
