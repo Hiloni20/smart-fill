@@ -9,8 +9,8 @@ def calculate_age(birthdate):
     return age
 
 def read_and_update_excel():
-    excel_file_path = '/Users/atharvabapat/airflow/FamilyOfficeEntityDataSampleV1.1.xlsx'
-    updated_excel_file_path = '/Users/atharvabapat/airflow/updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx'
+    excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+    updated_excel_file_path = 'updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx'
     
     # Read Excel file using 'openpyxl' engine
     df = pd.read_excel(excel_file_path, sheet_name='Client Profile', engine='openpyxl')
