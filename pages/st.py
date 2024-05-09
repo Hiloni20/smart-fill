@@ -6,9 +6,16 @@ def preprocess_excel_files(selected_files):
         st.error("Please select at least one file to preprocess.")
         return
     
+    # Define your authentication credentials
+    username = 'admin'
+    password = 'Hilonib20!'
+
     # Make a POST request to trigger the Airflow DAG
-    response = requests.post('http://localhost:8080/api/v1/dags/preprocess_extract_columns/dagRuns',
-                             json={})
+    url = 'http://localhost:8080/api/v1/dags/preprocess_extract_columns/dagRuns'
+    headers = {'Content-Type': 'application/json'}
+    auth = (username, password)
+    response = requests.post(url, headers=headers, auth=auth, json={})
+
     if response.status_code == 200:
         st.success("Airflow DAG triggered successfully.")
     else:
