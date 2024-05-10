@@ -101,7 +101,7 @@ dag = DAG(
     'preprocess_extract_columns',
     default_args=default_args,
     description='A DAG to preprocess Excel files and extract columns',
-    schedule_interval=None,
+    schedule=None,
 )
 
 preprocess_files_task = PythonOperator(
