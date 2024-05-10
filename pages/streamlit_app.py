@@ -13,8 +13,8 @@ def calculate_age(birthdate):
     return age
 
 def read_and_update_excel():
-    excel_file_path = '/Users/atharvabapat/airflow/FamilyOfficeEntityDataSampleV1.1.xlsx'
-    updated_excel_file_path = '/Users/atharvabapat/airflow/updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx'
+    excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+    updated_excel_file_path = 'updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx'
     
     # Read Excel file using 'openpyxl' engine
     df = pd.read_excel(excel_file_path, sheet_name='Client Profile', engine='openpyxl')
@@ -35,8 +35,8 @@ def read_and_update_excel():
     print("Excel file updated successfully! on May 10")
 
 def calculate_age_family_members():
-    excel_file_path = '/Users/atharvabapat/airflow/FamilyOfficeEntityDataSampleV1.1.xlsx'
-    updated_excel_file_path = '/Users/atharvabapat/airflow/Y_New_Processed.xlsx'
+    excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
+    updated_excel_file_path = 'Y_New_Processed.xlsx'
     
     df = pd.read_excel(excel_file_path, sheet_name='Family Members', engine='openpyxl')
     df_updated = df.copy()
@@ -80,9 +80,9 @@ with DAG(dag_id="streamlit_app",
 #     age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
 #     return age
 
-file_path_X = "/Users/atharvabapat/airflow/updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx"
+file_path_X = "updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx"
 df = pd.read_excel(file_path_X, engine='openpyxl')
-file_path_Y = "/Users/atharvabapat/airflow/Y_New_Processed.xlsx"
+file_path_Y = "Y_New_Processed.xlsx"
 df1 = pd.read_excel(file_path_Y, engine='openpyxl')
 # file_path_Y="/Users/atharvabapat/airflow/Y_New_Processed.xlsx"
 # df1=pd.read_excel(file_path_Y, engine='openpyxl')
