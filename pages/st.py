@@ -50,7 +50,7 @@ from datetime import datetime
 
 def preprocess_selected_files(selected_files):
     for file_name in selected_files:
-        file_path = f'/pages/{file_name}'
+        file_path = f'pages/{file_name}'
         try:
             df = pd.read_excel(file_path)
             original_indices = df.index
