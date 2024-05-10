@@ -119,6 +119,8 @@ streamlit_task = BashOperator(
     dag=dag,
 )
 
+preprocess_files_task
+
 def main():
     st.title('Excel Preprocessing')
 
