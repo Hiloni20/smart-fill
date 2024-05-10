@@ -50,7 +50,7 @@ from datetime import datetime
 
 def preprocess_selected_files(selected_files):
     for file_name in selected_files:
-        file_path = f'/Users/hilonibhimani/airflow/dags/{file_name}'
+        file_path = f'/pages/{file_name}'
         try:
             df = pd.read_excel(file_path)
             original_indices = df.index
@@ -110,11 +110,11 @@ preprocess_files_task = PythonOperator(
     dag=dag,
 )
 
-streamlit_task = BashOperator(
-    task_id='run_streamlit_app',
-    bash_command='streamlit run /Users/hilonibhimani/airflow/dags/st.py',  
-    dag=dag,
-)
+# streamlit_task = BashOperator(
+#     task_id='run_streamlit_app',
+#     bash_command='streamlit run /Users/hilonibhimani/airflow/dags/st.py',  
+#     dag=dag,
+# )
 
 def main():
     st.title('Excel Preprocessing')
