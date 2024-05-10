@@ -6,6 +6,8 @@ from airflow import DAG
 
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
+import os
+from git import Repo
 
 from datetime import datetime
 
@@ -35,6 +37,11 @@ def preprocess_selected_files(selected_files):
             preprocessed_file_path = file_path.replace('.xlsx', '_preprocessed.xlsx')
             df.to_excel(preprocessed_file_path, index=False)
             st.write(f"Preprocessed file saved: {preprocessed_file_path}")
+
+
+            # Commit and push changes to GitHub repository
+            commit_and_push_to_github(preprocessed_file_path)
+            
         except Exception as e:
             st.error(f"Error preprocessing file {file_name}: {str(e)}")
 
@@ -49,6 +56,21 @@ def categorize_generation(year):
         return 'Baby Boomers'
     else:
         return 'Silent Generation'
+
+# Function to commit and push changes to GitHub
+def commit_and_push_to_github(file_path):
+    repo_dir = '/path/to/your/local/repository'  # Specify the local repository directory
+    repo = Repo(repo_dir)
+
+    # Add the preprocessed file to the staging area
+    repo.git.add(file_path)
+
+    # Commit the changes with a message
+    repo.git.commit('-m', 'Add preprocessed file')
+
+    # Push the changes to the remote repository
+    origin = repo.remote(name='origin')
+    origin.push()
 
 
 default_args = {
