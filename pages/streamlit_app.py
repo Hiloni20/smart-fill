@@ -14,7 +14,7 @@ def calculate_age(birthdate):
 
 def read_and_update_excel():
     excel_file_path = 'FamilyOfficeEntityDataSampleV1.1.xlsx'
-    updated_excel_file_path = 'updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx'
+    updated_excel_file_path = 'Processed_X_file.xlsx'
     
     # Read Excel file using 'openpyxl' engine
     df = pd.read_excel(excel_file_path, sheet_name='Client Profile', engine='openpyxl')
@@ -80,7 +80,7 @@ with DAG(dag_id="streamlit_app",
 #     age = today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day))
 #     return age
 
-file_path_X = "updatedX_sheet_FamilyOfficeEntityDataSampleV1.1.xlsx"
+file_path_X = "Processed_X_file.xlsx"
 df = pd.read_excel(file_path_X, engine='openpyxl')
 file_path_Y = "Y_New_Processed.xlsx"
 df1 = pd.read_excel(file_path_Y, engine='openpyxl')
