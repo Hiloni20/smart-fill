@@ -110,11 +110,11 @@ preprocess_files_task = PythonOperator(
     dag=dag,
 )
 
-# streamlit_task = BashOperator(
-#     task_id='run_streamlit_app',
-#     bash_command='streamlit run /Users/hilonibhimani/airflow/dags/st.py',  
-#     dag=dag,
-# )
+streamlit_task = BashOperator(
+    task_id='run_streamlit_app',
+    bash_command='streamlit run /Users/hilonibhimani/airflow/dags/st.py',  
+    dag=dag,
+)
 
 def main():
     st.title('Excel Preprocessing')
