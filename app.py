@@ -49,39 +49,36 @@ import importlib.util
 import os
 
 def load_page(page):
-    spec = importlib.util.spec_from_file_location(page, os.path.join("pages", f"{page}.py"))
+    file_path = os.path.join("pages", f"{page}.py")
+    spec = importlib.util.spec_from_file_location(page, file_path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
+    module.main()
 
 # Main layout
 st.set_page_config(layout="wide")
 
 # Sidebar layout with Famiology logo and dropdown menus
 with st.sidebar:
-    st.image("FamiologyTextLogo.png", width=150)
+    st.image("fami_logo.png", width=150)
     
-    apps = option_menu("Apps", ["App 1", "App 2", "App 3"],
-                       icons=["app-indicator", "app-indicator", "app-indicator"],
-                       menu_icon="cast", default_index=0)
-    
-    dashboards = option_menu("Dashboards", ["Dashboard 1", "Dashboard 2", "Dashboard 3"],
-                             icons=["graph-up", "graph-up", "graph-up"],
-                             menu_icon="cast", default_index=0)
+    app_choice = st.selectbox("Select an App", ["Select", "App 1", "App 2", "App 3"])
+    dashboard_choice = st.selectbox("Select a Dashboard", ["Select", "Dashboard 1", "Dashboard 2", "Dashboard 3"])
 
 # Page loading area
 st.title("Page Loading Area")
 
-# Conditional rendering based on selected menu items
-if apps == "App 1":
+# Load the selected app or dashboard
+if app_choice == "App 1":
     load_page("app1")
-elif apps == "App 2":
+elif app_choice == "App 2":
     load_page("app2")
-elif apps == "App 3":
+elif app_choice == "App 3":
     load_page("app3")
 
-if dashboards == "Dashboard 1":
+if dashboard_choice == "Dashboard 1":
     load_page("dashboard1")
-elif dashboards == "Dashboard 2":
+elif dashboard_choice == "Dashboard 2":
     load_page("dashboard2")
-elif dashboards == "Dashboard 3":
+elif dashboard_choice == "Dashboard 3":
     load_page("dashboard3")
